@@ -17,7 +17,9 @@
  *
  * @since Fruitful theme 1.0
  */
-function fruitful_theme_options_init() {
+s
+if( !function_exists('fruitful_theme_options_init') ) {
+function fruitful_theme_options_init () {
 	register_setting(
 		'fruitful_options', 		// Options group, see settings_fields() call in fruitful_theme_options_render_page()
 		'fruitful_theme_options', 	// Database option, see fruitful_get_theme_options()
@@ -36,22 +38,23 @@ function fruitful_theme_options_init() {
 	add_settings_section('links', 			'',  '__return_false', 'theme_options' );
 	add_settings_section('footer', 			'',  '__return_false', 'theme_options' );
 	add_settings_section('css', 			'',  '__return_false', 'theme_options' );
-	add_settings_section('woocommerce', 	'',  '__return_false', 'theme_options' );
 	
 	if (!$is_demo_content_installed) {
-		//add_settings_field( 'general_idc', 		__( 'Install Home Page', 	'fruitful' ),	'fruitful_demo_content',	'theme_options',  'general', array('info' => __( 'Setup home page with dummy data, like on demo. Option can be used once.', 'fruitful' )));
+		add_settings_field( 'general_idc', 		__( 'Install Home Page', 	'fruitful' ),	'fruitful_demo_content',	'theme_options',  'general', array('info' => __( 'Setup home page with dummy data, like on demo. Option can be used once.', 'fruitful' )));
 	}
 	
 	add_settings_field( 'general_rs', 		__( 'Layout', 	'fruitful' ),	'fruitful_get_responsive_design',	'theme_options',  'general', array('info' => __( 'Theme supported 2 types of html layout. Default responsive  setting which adapt for mobile devices and static page with fixed width. Uncheck arrow below if you need static website display. ', 'fruitful' )));
 	add_settings_field( 'general_cm',		__( 'Comments', 'fruitful' ), 	'fruitful_get_general_comment',  	'theme_options',  'general', array('info' => __( 'If you want to display comments on your post page or page, select options below.', 'fruitful' )));
 	add_settings_field( 'general_ds',		__( 'Default theme styles',  'fruitful' ),'fruitful_get_style_theme', 'theme_options',  'general', array('info' => __( 'Default CSS. Theme option for styling is not working, if this option enable.', 'fruitful' )));
+	if (class_exists('Woocommerce')) { 
+		add_settings_field( 'general_sc',		__( 'Show cart in header',  'fruitful' ),'fruitful_show_cart_theme', 'theme_options',  'general', array('info' => __( 'If you want to display cart link in header select options below.', 'fruitful' )));
+	}
 	add_settings_field( 'general_rb',		__( 'Reset options', 'fruitful' ), 'fruitful_reset_btn',  'theme_options',  'general', array('info' => __( 'All theme options will be reset to default. ', 'fruitful' )));
 	if(function_exists('icl_get_languages')){ // if WPML is activated
 		add_settings_field( 'general_wpml',		__( 'Multilingual Switch in Header (WPML)', 'fruitful' ), 'fruitful_wpml_ready',  'theme_options',  'general', array('info' => __( 'If you wish to show Language Switch in header, select option below. ', 'fruitful' )));
 	}
 	add_settings_field( 'header_hd',		__( 'Sticky  header', 	 		 'fruitful' ), 	'fruitful_get_general_header', 	'theme_options',  'header', array('info' => __( 'Options relating to the website header', 'fruitful' )));
 	add_settings_field( 'header_hi',		__( 'Background for header', 	 'fruitful' ), 	'fruitful_get_header_img', 		'theme_options',  'header', array('info' => __( 'Upload image with full width for background in header area. (Supported files .png, .jpg, .gif)  ', 'fruitful' )));
-	add_settings_field( 'header_hs',		__( 'Background image size', 	 		 'fruitful' ), 	'fruitful_get_header_img_size', 'theme_options',  'header', array('info' => __( 'Choose size for background image - full width or only for content area.', 'fruitful' )));
 	add_settings_field( 'header_hh',		__( 'Height for header area', 	 'fruitful' ), 	'fruitful_get_header_height', 	'theme_options',  'header', array('info' => __( 'Minimum height in pixels', 'fruitful' )));
 	add_settings_field( 'header_mp',		__( 'Menu Position', 			 'fruitful' ), 	'fruitful_set_menu_position', 	'theme_options',  'header', array('info' => __( 'Set menu position.', 'fruitful' )));
 		
@@ -60,17 +63,17 @@ function fruitful_theme_options_init() {
 	add_settings_field( 'background_color', __( 'Background Color ', 'fruitful' ), 'fruitful_get_background_color', 'theme_options',  'background', array('info' => __( 'Choose color for body background', 'fruitful' )));
 	add_settings_field( 'content_background_color', __( 'Background color for content  ', 'fruitful' ), 'fruitful_get_container_background_color', 'theme_options',  'background', array('info' => __( 'Choose color for main content area', 'fruitful' )));
 		
-	add_settings_field( 'logo_image', 		__( 'Logo image', 'fruitful' ), 	'fruitful_get_logo_img', 		'theme_options', 'logo',  	array('info' => __( 'Upload logo image for your website. Size is original (Supported files .png, .jpg, .gif)', 'fruitful' )));
-  //add_settings_field( 'logo_size', 		__( 'Logo Size', 'fruitful' ), 		'fruitful_get_logo_wh',	 		'theme_options', 'logo',  	array('info' => __( 'Specify resolution for your logo image. Our theme will crop (timthumb) your image for need size.', 'fruitful' )) );
-	add_settings_field( 'fav_icon', 		__( 'Favicon', 'fruitful' ), 		'fruitful_get_fav_icon', 		'theme_options', 'logo',  	array('info' => __( 'Upload needed image for site favicon. (Supported files .ico (16x16))', 'fruitful' )));
-	add_settings_field( 'logo_position', 	__( 'Logo Position', 'fruitful' ), 	'fruitful_set_logo_position', 	'theme_options', 'logo',  	array('info' => __( 'Set Logo Position', 'fruitful' )));
+	add_settings_field( 'logo_image', 		__( 'Logo image', 'fruitful' ), 	'fruitful_get_logo_img', 		'theme_options', 'logo', 		array('info' => __( 'Upload logo image for your website. Size is original (Supported files .png, .jpg, .gif)', 'fruitful' )));
+	//add_settings_field( 'logo_size', 		__( 'Logo Size', 'fruitful' ), 		'fruitful_get_logo_wh',	 		'theme_options', 'logo', 		array('info' => __( 'Specify resolution for your logo image. Our theme will crop (timthumb) your image for need size.', 'fruitful' )) );
+	add_settings_field( 'fav_icon', 		__( 'Favicon', 'fruitful' ), 		'fruitful_get_fav_icon', 		'theme_options', 'logo', 		array('info' => __( 'Upload needed image for site favicon. (Supported files .ico (16x16))', 'fruitful' )));
+	add_settings_field( 'logo_position', 	__( 'Logo Position', 'fruitful' ), 	'fruitful_set_logo_position', 	'theme_options', 'logo', 		array('info' => __( 'Set Logo Position', 'fruitful' )));
 	
-	
-	add_settings_field( 'menu_style',		__( 'Main menu color', 'fruitful' ),	'fruitful_menu_style_color', 'theme_options', 'colors',    	array('info' => __( 'Choose your colors for main menu in header', 'fruitful' )) );
-	add_settings_field( 'dropdown_menu_style',	__( 'Dropdown menu color', 'fruitful' ),'fruitful_dropdown_menu_style_color', 'theme_options', 'colors',    array('info' => __( 'Choose your colors for dropdown menu in header', 'fruitful' )) );
-	add_settings_field( 'font_style',		__( 'General font color', 'fruitful' ),	'fruitful_font_style_color',	'theme_options', 'colors',    	array('info' => __( 'Choose your colors for text and links', 'fruitful' )) );
+
+	add_settings_field( 'menu_style',		__( 'Main menu color', 'fruitful' ),	'fruitful_menu_style_color',		'theme_options', 'colors',    	array('info' => __( 'Choose your colors for main menu in header', 'fruitful' )) );
+	add_settings_field( 'dropdown_menu_style',		__( 'Dropdown menu color', 'fruitful' ),'fruitful_dropdown_menu_style_color', 'theme_options', 'colors',    array('info' => __( 'Choose your colors for dropdown menu in header', 'fruitful' )) );
+	add_settings_field( 'font_style',		__( 'General font color', 'fruitful' ),	'fruitful_font_style_color',		'theme_options', 'colors',    	array('info' => __( 'Choose your colors for text and links', 'fruitful' )) );
 	add_settings_field( 'separator_style',	__( 'Color for lines', 'fruitful' ),	'fruitful_sep_style_color',		'theme_options', 'colors',    	array('info' => __( 'Choose you colors for lines and separators', 'fruitful' )) );
-	add_settings_field( 'button_style',		__( 'Color for buttons', 'fruitful' ),	'fruitful_but_style_color',		'theme_options', 'colors',    	array('info' => __( 'Choose you colors for buttons', 'fruitful' ), 'newrow' => true) );
+	add_settings_field( 'button_style',		__( 'Color for buttons', 'fruitful' ),	'fruitful_but_style_color',		'theme_options', 'colors',    	array('info' => __( 'Choose you colors for buttons', 'fruitful' )) );
 	
 	
 	add_settings_field( 'fonts_options', 	__( 'Fonts', 'fruitful' ), 	'fruitful_fonts_options',	'theme_options', 'fonts', 		array('info' => __( 'Popular web safe font collection, select and use for your needs.', 'fruitful' )) );
@@ -88,28 +91,23 @@ function fruitful_theme_options_init() {
 	add_settings_field( 'socials_links', 	__( 'Socials Links', 'fruitful' ), 	'fruitful_settings_field_socials_links', 'theme_options', 'links', array('info' => __( 'Add link to your social media profiles. Icons with link will be display in header or footer.', 'fruitful' )) );
 	add_settings_field( 'footer_text_copy',	__( 'Footer options', 'fruitful' ), 'fruitful_settings_field_footer_text', 'theme_options',   'footer', array('info' => __( 'Replace default theme copyright information and links', 'fruitful' )) );
 	
-	add_settings_field( 'custom_css',		__( 'Custom CSS', 'fruitful' ), 'fruitful_settings_field_custom_css', 'theme_options', 'css' , array('info' => __( 'Theme has two css files style.css and fixed-style.css which use default styles for front-end responsive and static layout. Do not edit theme default css files, use textarea editor below for overwriting all css styles.', 'fruitful' )) );
-	
-	if (class_exists('Woocommerce')) { 
-		add_settings_field( 'general_sc',		 __( 'Show cart in header',  'fruitful' ),'fruitful_show_cart_theme', 'theme_options',  'woocommerce', array('info' => __( 'If you want to display cart link in header select options below.', 'fruitful' )));
-		add_settings_field( 'woo_shop_sidebar',	 __( 'Woocommerce Shop Sidebar', 'fruitful' ), 	'fruitful_woo_shop_sidebar', 'theme_options', 'woocommerce', 		array('info' => __( 'Show or hide sidebar', 'fruitful' )));
-		add_settings_field( 'shop_num_row',		 __( 'Woocommerce pages products per row', 'fruitful' ), 	'fruitful_set_shop_num_row', 'theme_options', 'woocommerce', 		array('info' => __( 'Choose number of products', 'fruitful' )));
-		add_settings_field( 'woo_shop_num_prod', __( 'Number of products on Shop pages', 'fruitful' ), 	'fruitful_woo_shop_prod', 'theme_options', 'woocommerce', 		array('info' => __( 'Choose number of products. Write -1 for show all products on one page', 'fruitful' )));
-	}
+	add_settings_field( 'csutom_css',		__( 'Custom CSS', 'fruitful' ), 'fruitful_settings_field_custom_css', 'theme_options', 'css' , array('info' => __( 'Theme has two css files style.css and fixed-style.css which use default styles for front-end responsive and static layout. Do not edit theme default css files, use textarea editor below for overwriting all css styles.', 'fruitful' )) );
 	
 	if(!get_option( 'fruitful_theme_options' )) {
 		add_option( 'fruitful_theme_options', fruitful_get_theme_options());
 	}
-}
+}}
 	
 add_action( 'admin_init', 'fruitful_theme_options_init' );
 
 add_action( 'admin_enqueue_scripts', 'add_admin_options_and_styles' );
-function add_admin_options_and_styles($hook) {
+
+if( !function_exists('add_admin_options_and_styles') ) {
+function add_admin_options_and_styles ($hook) {
 	if( 'appearance_page_theme_options' != $hook ) return;
 	fruitful_add_jquery_script();
 	fruitful_add_admin_style();
-} 
+}} 
 
 /**
  * Change the capability required to save the 'fruitful_options' options group.
@@ -120,9 +118,11 @@ function add_admin_options_and_styles($hook) {
  * @param string $capability The capability used for the page, which is manage_options by default.
  * @return string The capability to actually use.
  */
-function fruitful_option_page_capability( $capability ) {
+
+if( !function_exists('fruitful_option_page_capability') ) {
+function fruitful_option_page_capability ( $capability ) {
 	return 'edit_theme_options';
-}
+}}
 add_filter( 'option_page_capability_fruitful_options', 'fruitful_option_page_capability' );
 
 /**
@@ -133,7 +133,9 @@ add_filter( 'option_page_capability_fruitful_options', 'fruitful_option_page_cap
  * @since Fruitful theme 1.0
  */
 add_action( 'admin_menu', 'fruitful_theme_options_add_page' );
- function fruitful_theme_options_add_page() {
+
+if( !function_exists('fruitful_theme_options_add_page') ) {
+function fruitful_theme_options_add_page() {
 	$theme_page = add_theme_page(
 		__( 'Fruitful Theme Options', 'fruitful' ),   	// Name of page
 		__( 'Theme Options', 'fruitful' ),   			// Label in menu
@@ -141,18 +143,20 @@ add_action( 'admin_menu', 'fruitful_theme_options_add_page' );
 			'theme_options',                     		// Menu slug, used to uniquely identify the page
 			'fruitful_theme_options_render_page' 		// Function that renders the options page
 	);
-}
+}}
 
 
 add_action( 'admin_bar_menu', 'fruitful_add_custom_link_options', 1000 );
-function fruitful_add_custom_link_options() {
+
+if( !function_exists('fruitful_add_custom_link_options') ) {
+function fruitful_add_custom_link_options () {
     global $wp_admin_bar, $wpdb;
 		if ( !is_super_admin() || !is_admin_bar_showing() )
 		return;
 
 	/* Add the main siteadmin menu item */
     $wp_admin_bar->add_menu( array( 'id' => 'fruitfultheme_options', 'title' => __( 'Theme Options', 'fruitful' ), 'href' => admin_url('admin.php?page=theme_options')));	
-}
+}}
 
 
 /**
@@ -160,16 +164,20 @@ function fruitful_add_custom_link_options() {
  *
  * @since Fruitful theme 1.0
  */
-function fruitful_get_theme_options() {
+
+if( !function_exists('fruitful_get_theme_options') ) {
+function fruitful_get_theme_options () {
 	$saved = (array) get_option( 'fruitful_theme_options' );
 	$defaults = fruitful_get_default_array();
 	$defaults = apply_filters( 'fruitful_default_theme_options', $defaults );
 	$options  = wp_parse_args( $saved, $defaults );
 	$options = array_intersect_key( $options, $defaults );
 	return $options;
-}
+}}
 
-function fruitful_demo_content() {
+
+if( !function_exists('fruitful_demo_content') ) {
+function fruitful_demo_content () {
 	?>	
 	<div class="box-option">
 		<input type="button" id="btn_idc" class="btn_idc button button-primary" value="<?php _e('Dummy data', 'fruitful');?>"/>
@@ -200,9 +208,11 @@ function fruitful_get_general_comment() {
 			</label>
 		</div>
 	<?php	
-}
+}}
 
-function fruitful_get_general_header() {
+
+if( !function_exists('fruitful_get_general_header') ) {
+function fruitful_get_general_header () {
 	$options = fruitful_get_theme_options();
 	?>
 		<div class="box-option">
@@ -216,9 +226,11 @@ function fruitful_get_general_header() {
 			<input type="text" id="header_bg_color" class="colorPicker" name="fruitful_theme_options[header_bg_color]" value="<?php echo esc_attr($options['header_bg_color']); ?>" data-default-color="#ffffff"/>
 		</div>
 	<?php
-}
+}}
 
-function fruitful_get_style_theme() {
+
+if( !function_exists('fruitful_get_style_theme') ) {
+function fruitful_get_style_theme () {
 	$options = fruitful_get_theme_options();
 	?>
 		<div class="box-option">
@@ -227,9 +239,11 @@ function fruitful_get_style_theme() {
 			</label>
 		</div>
 	<?php	
-}
+}}
 
-function fruitful_show_cart_theme() {
+
+if( !function_exists('fruitful_show_cart_theme') ) {
+function fruitful_show_cart_theme () {
 	$options = fruitful_get_theme_options();
 	?>
 		<div class="box-option">
@@ -238,17 +252,21 @@ function fruitful_show_cart_theme() {
 			</label>
 		</div>
 	<?php	
-}
+}}
 
-function fruitful_reset_btn() { 
+
+if( !function_exists('fruitful_reset_btn') ) {
+function fruitful_reset_btn () { 
 	?>
 	<div class="box-option">
 		<input name="reset" class="button-primary reset-btn" value="<?php esc_attr_e('Reset Defaults', 'fruitful'); ?>" />		
 	</div>	
 	<?php	
-}
+}}
 
-function fruitful_wpml_ready() {
+
+if( !function_exists('fruitful_wpml_ready') ) {
+function fruitful_wpml_ready () {
 	$options = fruitful_get_theme_options();
 	?>
 		<div class="box-option">
@@ -257,18 +275,22 @@ function fruitful_wpml_ready() {
 			</label>
 		</div>
 		<?php 
-}
+}}
 
-function fruitful_settings_field_socials_links_position() {
+
+if( !function_exists('fruitful_settings_field_socials_links_position') ) {
+function fruitful_settings_field_socials_links_position () {
 	$options = fruitful_get_theme_options();
 	?>
 	<div class="soc_links_positions">
 		<?php fruitful_get_select_fields('sl_position', $options, fruitful_social_links_positions_list(), 'select-position'); ?>
 	</div>
 	<?php
-}	
+}}	
 
-function fruitful_settings_field_socials_links() {
+
+if( !function_exists('fruitful_settings_field_socials_links') ) {
+function fruitful_settings_field_socials_links () {
 	$options = fruitful_get_theme_options();
 	?>
 	<div class="socials">
@@ -289,23 +311,29 @@ function fruitful_settings_field_socials_links() {
 		<h4>E-mail</h4>			<input id="email_link" 		class="text-input" name="fruitful_theme_options[email_link]" 	type="text"   value="<?php echo sanitize_email( $options['email_link'] ); ?>"/>
 	</div>
 	<?php
-}	
+}}	
 	
-function fruitful_settings_field_footer_text() {
+
+if( !function_exists('fruitful_settings_field_footer_text') ) {
+function fruitful_settings_field_footer_text () {
 	$options = fruitful_get_theme_options();
 	?>
 	<h4><?php _e( 'Copyright section', 'fruitful' ); ?></h4><textarea class="large-text" name="fruitful_theme_options[footer_text]" id="footer-text" cols="50" rows="20" /><?php echo stripslashes($options['footer_text']); ?></textarea>
 <?php
-}
+}}
 
-function fruitful_settings_field_custom_css() {
+
+if( !function_exists('fruitful_settings_field_custom_css') ) {
+function fruitful_settings_field_custom_css () {
 	$options = fruitful_get_theme_options();
 	?>
 	<h4><?php _e( 'Styles editor', 'fruitful' ); ?></h4><textarea class="large-text" name="fruitful_theme_options[custom_css]" id="css-text" cols="50" rows="30" /><?php echo stripslashes($options['custom_css']); ?></textarea>
 <?php
-}
+}}
 
-function fruitful_get_background_img () {
+
+if( !function_exists('fruitful_get_background_img') ) {
+function fruitful_get_background_img  () {
 	$options = fruitful_get_theme_options();
 	$upload  = $options['backgroung_img'];
 	
@@ -327,92 +355,69 @@ function fruitful_get_header_img () {
 	$upload  = intval($options['header_img']);
 
 	echo fruitful_get_box_upload_image($upload, 'header_img', 'upload_btn', 'reset_btn', 'headerbackground', 'headerimgbackground');
-}
+}}
 
-function fruitful_get_header_img_size () {
-	$options = fruitful_get_theme_options();
-?>
-	<div class="box-option">
-		<?php fruitful_get_select_fields('header_img_size', $options, fruitful_get_header_img_sizes(), 'headerimgbackground'); ?>		
-	</div>
-<?php 
-}
 
-function fruitful_get_header_height() {
+if( !function_exists('fruitful_get_header_height') ) {
+function fruitful_get_header_height () {
 	$options = fruitful_get_theme_options();
 	?>
 	<div class="box-option">
 		<input type="text" name="fruitful_theme_options[header_height]" id="header_height" class="header_height small_input text-input" value="<?php echo intval($options['header_height']); ?>"/>
 	</div>	
 <?php	
-}
+}}
 
 
-function fruitful_set_menu_position() {
+
+if( !function_exists('fruitful_set_menu_position') ) {
+function fruitful_set_menu_position () {
 	$options = fruitful_get_theme_options();
 	?>
 	<div class="box-option">
 		<?php fruitful_get_select_fields('menu_position', $options, fruitful_elem_position(), 'menu-position'); ?>		
 	</div>	
 <?php	
-}
+}}
 
-function fruitful_woo_shop_sidebar() {
-	$options = fruitful_get_theme_options();
-	?>
-	<div class="box-option">
-		<?php fruitful_get_select_fields('woo_shop_sidebar', $options, fruitful_woo_shop_sidebar_list(), 'woocommerce'); ?>		
-	</div>	
-<?php	
-}
 
-function fruitful_set_shop_num_row() {
-	$options = fruitful_get_theme_options();
-	?>
-	<div class="box-option">
-		<?php fruitful_get_select_fields('shop_num_row', $options, fruitful_number_per_row(), 'woocommerce'); ?>		
-	</div>	
-<?php	
-}
 
-function fruitful_woo_shop_prod() {
-	$options = fruitful_get_theme_options();
-	?>
-	<div class="box-option">
-		<input type="text" name="fruitful_theme_options[woo_shop_num_prod]" id="woo_shop_num_prod" class="woo_shop_num_prod small_input text-input" value="<?php echo intval($options['woo_shop_num_prod']); ?>"/>
-	</div>	
-<?php	
-}
-
-function fruitful_get_logo_img () {
+if( !function_exists('fruitful_get_logo_img') ) {
+function fruitful_get_logo_img  () {
 	$options = fruitful_get_theme_options();
 	$upload  = intval($options['logo_img']);
 
 	echo fruitful_get_box_upload_image($upload, 'logo_img', 'upload_btn', 'reset_btn', 'logo'); 
-}
+}}
 
 
-function fruitful_get_fav_icon () {
+
+if( !function_exists('fruitful_get_fav_icon') ) {
+function fruitful_get_fav_icon  () {
 	$options = fruitful_get_theme_options();
 	$upload  = intval($options['fav_icon']);
 
 	echo fruitful_get_box_upload_image($upload, 'fav_icon', 'upload_btn', 'reset_btn', 'favicon');
-}
+}}
 
 
 
 
-function fruitful_set_logo_position() {
+
+if( !function_exists('fruitful_set_logo_position') ) {
+function fruitful_set_logo_position () {
 	$options = fruitful_get_theme_options();
 	?>
 	<div class="box-option">
 		<?php fruitful_get_select_fields('logo_position', $options, fruitful_elem_position(), 'logo-position'); ?>		
 	</div>	
 <?php	
-}
+}}
 
 
-function fruitful_get_logo_wh () {
+
+if( !function_exists('fruitful_get_logo_wh') ) {
+function fruitful_get_logo_wh  () {
 	$options = fruitful_get_theme_options();
 	$upload  = intval($options['logo_img']);
 	?>
@@ -428,11 +433,11 @@ function fruitful_fonts_options () {
 	?>
 	
 	<?php
-}
+}}
 
 
-
-function fruitful_fonts_headers () {
+if( !function_exists('fruitful_fonts_headers') ) {
+function fruitful_fonts_headers  () {
 	$options = fruitful_get_theme_options();
 	?>
     <div class="text_fonts">
@@ -441,9 +446,11 @@ function fruitful_fonts_headers () {
 	</div>
 
 	<?php
-}
+}}
 
-function fruitful_fonts_menu () {
+
+if( !function_exists('fruitful_fonts_menu') ) {
+function fruitful_fonts_menu  () {
 	$options = fruitful_get_theme_options();
 	?>
     <div class="text_fonts">
@@ -451,9 +458,11 @@ function fruitful_fonts_menu () {
 		<?php fruitful_get_select_fields('m_font_family',$options, fruitful_fonts_list(), 'select-fonts'); ?>
 	</div>
 	<?php
-}
+}}
 
-function fruitful_fonts_content () {
+
+if( !function_exists('fruitful_fonts_content') ) {
+function fruitful_fonts_content  () {
 	$options = fruitful_get_theme_options();
 	?>
     <div class="text_fonts">
@@ -461,9 +470,11 @@ function fruitful_fonts_content () {
 		<?php fruitful_get_select_fields('p_font_family', $options, fruitful_fonts_list(), 'select-fonts'); ?>
 	</div>		
 	<?php
-}
+}}
 
-function fruitful_fonts_size () {
+
+if( !function_exists('fruitful_fonts_size') ) {
+function fruitful_fonts_size  () {
 	$options = fruitful_get_theme_options();
 	?>
     <h4><?php _e( 'H1',   'fruitful' ); ?></h4><input type="text" name="fruitful_theme_options[h1_size]" id="h1-size" class="text-input" value ="<?php echo intval($options['h1_size']); ?>"/>
@@ -475,11 +486,13 @@ function fruitful_fonts_size () {
 	<h4><?php _e( 'Menu', 'fruitful' ); ?></h4><input type="text" name="fruitful_theme_options[m_size]"  id="m-size"  class="text-input" value ="<?php echo intval($options['m_size']); ?>"/>	
 	<h4><?php _e( 'P', 	  'fruitful' ); ?></h4><input type="text" name="fruitful_theme_options[p_size]"  id="p-size"  class="text-input" value ="<?php echo intval($options['p_size']); ?>"/>
 	<?php
-}
+}}
 
 
 
-function fruitful_slider_select() {
+
+if( !function_exists('fruitful_slider_select') ) {
+function fruitful_slider_select () {
 	$options = fruitful_get_theme_options();
 	fruitful_get_select_fields('select_slider',$options, fruitful_slide_select(), 'select-slider'); 
  }
@@ -525,9 +538,11 @@ function fruitful_slider_options() {
 	</div>
 	
 	<?php
-}
+}}
 
-function fruitful_get_slide($ind, $id, $link_url = null, $is_blank = 'off') {
+
+if( !function_exists('fruitful_get_slide') ) {
+function fruitful_get_slide ($ind, $id, $link_url = null, $is_blank = 'off') {
 	$out = '';
 	$out .= '<li class="slide" id="slide-image-' . $ind . '">';
 		$out .= '<h4 class="slide-header" id="slide-header-'. $ind .'">' . sprintf(__('Slide # %1$d', 'fruitful'),   $ind);
@@ -540,9 +555,11 @@ function fruitful_get_slide($ind, $id, $link_url = null, $is_blank = 'off') {
 		$out .= '</div>';
 	$out .= '</li>';
 	return $out;
-}	
+}}	
 
-function fruitful_slider_images() {
+
+if( !function_exists('fruitful_slider_images') ) {
+function fruitful_slider_images () {
 	$slides = get_option( 'fruitful_theme_options' );
 	$vcount_slides = 0;
 	if(!empty($slides['slides'])) {
@@ -575,9 +592,11 @@ function fruitful_slider_images() {
 		</ul>
 		<input type="button" class="button-primary add_new_btn" value="<?php _e('Add New Slide', 'fruitful'); ?>" />
 <?php
-}
+}}
 
-function fruitful_menu_style_color () {
+
+if( !function_exists('fruitful_menu_style_color') ) {
+function fruitful_menu_style_color  () {
 	$options = fruitful_get_theme_options();
 	?>
 		<div class="box-options">
@@ -605,9 +624,11 @@ function fruitful_menu_style_color () {
 			</fieldset>	
 		</div>
 	<?php
-}
+}}
 
-function fruitful_dropdown_menu_style_color () {
+
+if( !function_exists('fruitful_dropdown_menu_style_color') ) {
+function fruitful_dropdown_menu_style_color  () {
 	$options = fruitful_get_theme_options();
 	?>
 		<div class="box-options">
@@ -634,12 +655,13 @@ function fruitful_dropdown_menu_style_color () {
 				<input type="text" id="dd_menu_hover_color" class="colorPicker" name="fruitful_theme_options[dd_menu_hover_color]" value="<?php echo esc_attr($options['dd_menu_hover_color']); ?>" data-default-color="#ffffff" />
 			</fieldset>	
 		</div>
-		<div class="row"></div>
 	<?php
-}
+}}
 
 
-function fruitful_font_style_color () {
+
+if( !function_exists('fruitful_font_style_color') ) {
+function fruitful_font_style_color  () {
 	$options = fruitful_get_theme_options();
 	?>
 		<div class="box-options">
@@ -676,10 +698,12 @@ function fruitful_font_style_color () {
 			</fieldset>		
 		</div>
 	<?php
-}
+}}
 
 
-function fruitful_sep_style_color() {
+
+if( !function_exists('fruitful_sep_style_color') ) {
+function fruitful_sep_style_color () {
 	$options = fruitful_get_theme_options();
 	?>
 		<div class="box-options">
@@ -702,12 +726,13 @@ function fruitful_sep_style_color() {
 				<input type="text" id="date_of_post_f_color" class="colorPicker" name="fruitful_theme_options[date_of_post_f_color]" value="<?php echo esc_attr($options['date_of_post_f_color']); ?>" data-default-color="#ffffff" />
 			</fieldset>
 		</div>
-		<div class="row"></div>
 	<?php 
 
-}	
+}}	
 
-function fruitful_but_style_color() {
+
+if( !function_exists('fruitful_but_style_color') ) {
+function fruitful_but_style_color () {
 	$options = fruitful_get_theme_options();
 	?>
 		<div class="box-options">
@@ -725,33 +750,39 @@ function fruitful_but_style_color() {
 		</div>
 	<?php 
 
-}	
+}}	
 
 	
-function fruitful_get_background_color () {
+
+if( !function_exists('fruitful_get_background_color') ) {
+function fruitful_get_background_color  () {
 	$options = fruitful_get_theme_options();
 	?>
 		<fieldset>
 			<input type="text" id="background_color" class="colorPicker" name="fruitful_theme_options[background_color]" value="<?php echo esc_attr($options['background_color']); ?>"  data-default-color="#ffffff" />
 		</fieldset>
 	<?php
-}
+}}
 
-function fruitful_get_container_background_color () {
+
+if( !function_exists('fruitful_get_container_background_color') ) {
+function fruitful_get_container_background_color  () {
 	$options = fruitful_get_theme_options();
 	?>
 		<fieldset>
 			<input type="text" id="container_bg_color" class="colorPicker" name="fruitful_theme_options[container_bg_color]" value="<?php echo esc_attr($options['container_bg_color']); ?>" data-default-color="#ffffff" />
 		</fieldset>	
 	<?php
-}
+}}
 
 /**
  * Renders the Theme Options administration screen.
  *
  * @since Fruitful theme 1.0
  */
-function fruitful_theme_options_render_page() {
+
+if( !function_exists('fruitful_theme_options_render_page') ) {
+function fruitful_theme_options_render_page () {
 	?>
 	<div class="wrap">
 	<h2></h2> 
@@ -767,18 +798,15 @@ function fruitful_theme_options_render_page() {
 				<div class="menu-options">
 					<ul>
 						<li class="current"><a  id="item_0" href="javascript:void(0)" 	title="General "><span class="menu-img" id="menu_img_0"></span><span class="menu-text"><?php _e( 'General', 'fruitful' ); ?></span></a></li>
-						<li><a  id="item_1" href="javascript:void(0)" title="<?php _e( 'Header', 	 'fruitful' ); ?>"><span class="menu-img" id="menu_img_1"></span><span class="menu-text"><?php _e( 'Header',	 'fruitful' ); ?></span></a></li>
-						<li><a  id="item_2" href="javascript:void(0)" title="<?php _e( 'Background', 'fruitful' ); ?>"><span class="menu-img" id="menu_img_2"></span><span class="menu-text"><?php _e( 'Background', 'fruitful' ); ?></span></a></li>
-						<li><a  id="item_3" href="javascript:void(0)" title="<?php _e( 'Logo',		 'fruitful' ); ?>"><span class="menu-img" id="menu_img_3"></span><span class="menu-text"><?php _e( 'Logo',		 'fruitful' ); ?></span></a></li>
-						<li><a  id="item_4" href="javascript:void(0)" title="<?php _e( 'Colors',	 'fruitful' ); ?>"><span class="menu-img" id="menu_img_4"></span><span class="menu-text"><?php _e( 'Colors',	 'fruitful' ); ?></span></a></li>
-						<li><a  id="item_5" href="javascript:void(0)" title="<?php _e( 'Fonts', 	 'fruitful' ); ?>"><span class="menu-img" id="menu_img_5"></span><span class="menu-text"><?php _e( 'Fonts', 	 'fruitful' ); ?></span></a></li>
-						<li><a  id="item_6" href="javascript:void(0)" title="<?php _e( 'Slider', 	 'fruitful' ); ?>"><span class="menu-img" id="menu_img_6"></span><span class="menu-text"><?php _e( 'Slider', 	 'fruitful' ); ?></span></a></li>
-						<li><a  id="item_7" href="javascript:void(0)" title="<?php _e( 'Social Links','fruitful'); ?>"><span class="menu-img" id="menu_img_7"></span><span class="menu-text"><?php _e( 'Social Links','fruitful'); ?></span></a></li>
-						<li><a  id="item_8" href="javascript:void(0)" title="<?php _e( 'Footer', 	 'fruitful' ); ?>"><span class="menu-img" id="menu_img_8"></span><span class="menu-text"><?php _e( 'Footer', 	 'fruitful' ); ?></span></a></li>
-						<li><a  id="item_9" href="javascript:void(0)" title="<?php _e( 'Custom CSS', 'fruitful' ); ?>"><span class="menu-img" id="menu_img_9"></span><span class="menu-text"><?php _e( 'Custom CSS', 'fruitful' ); ?></span></a></li>
-						<?php if (class_exists('woocommerce')){ ?>
-						<li><a  id="item_10" href="javascript:void(0)" title="<?php _e( 'Woocommerce','fruitful' ); ?>"><span class="menu-img" id="menu_img_10"></span><span class="menu-text"><?php _e( 'Woocommerce','fruitful'); ?></span></a></li>
-						<?php } ?>
+						<li><a  id="item_1" href="javascript:void(0)" title="Header">		<span class="menu-img" id="menu_img_1"></span><span class="menu-text"><?php _e( 'Header', 	  'fruitful' ); ?></span></a></li>
+						<li><a  id="item_2" href="javascript:void(0)" title="Background">	<span class="menu-img" id="menu_img_2"></span><span class="menu-text"><?php _e( 'Background', 'fruitful' ); ?></span></a></li>
+						<li><a  id="item_3" href="javascript:void(0)" title="Logo">			<span class="menu-img" id="menu_img_3"></span><span class="menu-text"><?php _e( 'Logo',		  'fruitful' ); ?></span></a></li>
+						<li><a  id="item_4" href="javascript:void(0)" title="Menu">			<span class="menu-img" id="menu_img_4"></span><span class="menu-text"><?php _e( 'Colors',	  'fruitful' ); ?></span></a></li>
+						<li><a  id="item_5" href="javascript:void(0)" title="Fonts">		<span class="menu-img" id="menu_img_5"></span><span class="menu-text"><?php _e( 'Fonts', 	  'fruitful' ); ?></span></a></li>
+						<li><a  id="item_6" href="javascript:void(0)" title="Slider">		<span class="menu-img" id="menu_img_6"></span><span class="menu-text"><?php _e( 'Slider', 	  'fruitful' ); ?></span></a></li>
+						<li><a  id="item_7" href="javascript:void(0)" title="Social Links">	<span class="menu-img" id="menu_img_7"></span><span class="menu-text"><?php _e( 'Social Links', 'fruitful' ); ?></span></a></li>
+						<li><a  id="item_8" href="javascript:void(0)" title="Footer">		<span class="menu-img" id="menu_img_8"></span><span class="menu-text"><?php _e( 'Footer', 	 	'fruitful' ); ?></span></a></li>
+						<li><a  id="item_9" href="javascript:void(0)" title="CSS">			<span class="menu-img"  id="menu_img_9"></span><span class="menu-text"><?php _e( 'Custom CSS', 	'fruitful' ); ?></span></a></li>
 					</ul>
 				</div> 	
 				<?php
@@ -807,35 +835,43 @@ function fruitful_theme_options_render_page() {
 		</div>
 	</div>
 	<?php
-}
+}}
 
 
 add_action('wp_ajax_fruitful_reset_btn', 'fruitful_reset_action');
-function fruitful_reset_action() {
+
+if( !function_exists('fruitful_reset_action') ) {
+function fruitful_reset_action () {
 	delete_option('fruitful_theme_options', '');
 	die();
-}
+}}
 
 
 add_action('wp_ajax_fruitful_add_new_slide_action', 'fruitful_new_slide');
-function fruitful_new_slide() {
+
+if( !function_exists('fruitful_new_slide') ) {
+function fruitful_new_slide () {
 	$slides = (array) get_option( 'fruitful_theme_slides_options' );
 	$data 	 = $_POST['data'];
 	echo fruitful_get_slide($data, -1, ''); 
 	die();
-}
+}}
 
 
 add_action('wp_ajax_run_import_dummy_data', 'fruitful_run_import_dummy_data');
-function fruitful_run_import_dummy_data() {
+
+if( !function_exists('fruitful_run_import_dummy_data') ) {
+function fruitful_run_import_dummy_data () {
 	$vIsUpdate = false;
 	$vIsUpdate = fruitful_create_home_page();
 	echo $vIsUpdate;
 	die();
-}
+}}
 
 add_action('wp_ajax_fruitful_theme_options_action', 'fruitful_data_save');
-function fruitful_data_save() {
+
+if( !function_exists('fruitful_data_save') ) {
+function fruitful_data_save () {
 	$data = $_POST['fruitful_theme_options'];
 	
 	if (!isset($data['responsive'])) 	  {$data['responsive'] 		= 'off'; }
@@ -856,5 +892,5 @@ function fruitful_data_save() {
 	    } else {
 	           die('1');  
 	    }
-}
+}}
 ?>

@@ -1,21 +1,7 @@
 <?php
 
-function fruitful_get_header_img_sizes() {
-	$num_row = array(
-		'0' => array(
-			'value' =>	   'full',
-			'label' => __( 'Full width position', 'fruitful' )
-		),
-		'1' => array(
-			'value' =>	   'centered',
-			'label' => __( 'Centered position', 'fruitful' )
-		)
-	);
-
-	return apply_filters( 'fruitful_number_per_row', $num_row );
-}
-
-function fruitful_slide_skins_select() {
+if( !function_exists('fruitful_slide_skins_select') ) {
+function fruitful_slide_skins_select () {
 	$slide_skins = array(
 		'0' => array(
 			'value' =>	   'theme-default',
@@ -36,9 +22,11 @@ function fruitful_slide_skins_select() {
 	);
 
 	return apply_filters( 'fruitful_slide_skins_select', $slide_skins );
-}
+}}
 
-function fruitful_slide_select() {
+
+if( !function_exists('fruitful_slide_select') ) {
+function fruitful_slide_select () {
 	$slide_anim_options = array(
 		'0' => array(
 			'value' =>	   '1',
@@ -51,10 +39,12 @@ function fruitful_slide_select() {
 	);
 
 	return apply_filters( 'fruitful_slide_select', $slide_anim_options );
-}
+}}
 
 
-function fruitful_elem_position() {
+
+if( !function_exists('fruitful_elem_position') ) {
+function fruitful_elem_position () {
 	$elem_pos = array(
 		'0' => array(
 			'value' =>	   '0',
@@ -71,51 +61,12 @@ function fruitful_elem_position() {
 	);
 
 	return apply_filters( 'fruitful_elem_position', $elem_pos );
-}
+}}
 
-function fruitful_woo_shop_sidebar_list() {
-	$num_row = array(
-		'0' => array(
-			'value' =>	   '1',
-			'label' => __( 'Full width', 'fruitful' )
-		),
-		'1' => array(
-			'value' =>	   '2',
-			'label' => __( 'Left sidebar', 'fruitful' )
-		),
-		'2' => array(
-			'value' =>	   '3',
-			'label' => __( 'Right sidebar', 'fruitful' )
-		)
-	);
 
-	return apply_filters( 'fruitful_number_per_row', $num_row );
-}
 
-function fruitful_number_per_row() {
-	$num_row = array(
-		'0' => array(
-			'value' =>	   '2',
-			'label' => __( '2 products', 'fruitful' )
-		),
-		'1' => array(
-			'value' =>	   '3',
-			'label' => __( '3 products', 'fruitful' )
-		),
-		'2' => array(
-			'value' =>	   '4',
-			'label' => __( '4 products', 'fruitful' )
-		),
-		'3' => array(
-			'value' =>	   '5',
-			'label' => __( '5 products', 'fruitful' )
-		)
-	);
-
-	return apply_filters( 'fruitful_number_per_row', $num_row );
-}
-
-function fruitful_flex_effect() {
+if( !function_exists('fruitful_flex_effect') ) {
+function fruitful_flex_effect () {
 	$flex_effects = array(
 		'0' => array(
 			'value' =>	   'random',
@@ -173,9 +124,11 @@ function fruitful_flex_effect() {
 	);
 
 	return apply_filters( 'fruitful_flex_effect', $flex_effects );
-}
+}}
 
-function fruitful_slide_anim_list() {
+
+if( !function_exists('fruitful_slide_anim_list') ) {
+function fruitful_slide_anim_list () {
 	$slide_anim_options = array(
 		'0' => array(
 			'value' =>	   'fade',
@@ -188,9 +141,11 @@ function fruitful_slide_anim_list() {
 	);
 
 	return apply_filters( 'fruitful_slide_anim_list', $slide_anim_options );
-}
+}}
 
-function fruitful_slide_direction_list() {
+
+if( !function_exists('fruitful_slide_direction_list') ) {
+function fruitful_slide_direction_list () {
 	$slide_direct_options = array(
 		'0' => array(
 			'value' =>	   'horizontal',
@@ -203,9 +158,11 @@ function fruitful_slide_direction_list() {
 	);
 
 	return apply_filters( 'fruitful_slide_direction_list', $slide_direct_options );
-}
+}}
 
-function fruitful_bool_list() {
+
+if( !function_exists('fruitful_bool_list') ) {
+function fruitful_bool_list () {
 	$font_bool_options = array(
 		'0' => array(
 			'value' =>	   'true',
@@ -217,11 +174,13 @@ function fruitful_bool_list() {
 		)
 	);
 	return apply_filters( 'fruitful_bool_list', $font_bool_options);
-}
+}}
 
 
 
-function fruitful_fonts_list() {
+
+if( !function_exists('fruitful_fonts_list') ) {
+function fruitful_fonts_list () {
 	$font_family_options = array(
 		'0' => array(
 			'value' =>	   'Arial, Helvetica, sans-serif',
@@ -332,9 +291,11 @@ function fruitful_fonts_list() {
 	);
 
 	return apply_filters( 'fruitful_fonts_list', $font_family_options );
-}
+}}
 
-function fruitful_social_links_positions_list() {
+
+if( !function_exists('fruitful_social_links_positions_list') ) {
+function fruitful_social_links_positions_list () {
 	$links_position_options = array(
 		'0' => array(
 			'value' =>	   '1',
@@ -347,7 +308,7 @@ function fruitful_social_links_positions_list() {
 	);
 
 	return apply_filters( 'fruitful_social_links_positions_list', $links_position_options );
-}
+}}
 
  function fruitful_custom_do_settings_sections($page) {
     global $wp_settings_sections, $wp_settings_fields;
@@ -375,7 +336,9 @@ function fruitful_social_links_positions_list() {
 }
 
 
-function fruitful_custom_do_settings_fields($page, $section) {
+
+if( !function_exists('fruitful_custom_do_settings_fields') ) {
+function fruitful_custom_do_settings_fields ($page, $section) {
     global $wp_settings_fields;
 	$id_=0;
 
@@ -385,12 +348,7 @@ function fruitful_custom_do_settings_fields($page, $section) {
         return;
 		
     foreach ( (array) $wp_settings_fields[$page][$section] as $field ) {
-        if (!empty($field['args']['newrow'])) {
-			print '<div id="set_form_row_' . $id_ .'" class="settings-form-row newrow">';
-		} else {
-			print '<div id="set_form_row_' . $id_ .'" class="settings-form-row">';
-		}
-		
+        print '<div id="set_form_row_' . $id_ .'" class="settings-form-row">';
         if ( !empty($field['args']['label_for']) )
             print '<h3 class="main-header-options">' . esc_attr($field['title']);
         else
@@ -402,18 +360,22 @@ function fruitful_custom_do_settings_fields($page, $section) {
 		print '</div></div>';
 			$id_++;		 
     }
-}
+}}
 
-function fruitful_add_admin_style() {
+
+if( !function_exists('fruitful_add_admin_style') ) {
+function fruitful_add_admin_style () {
 	wp_enqueue_style('admin-style', 		get_template_directory_uri() . '/inc/css/admin.css');
 	wp_enqueue_style('fonts-style', 		get_template_directory_uri() . '/inc/css/fonts-style.css');
 	wp_enqueue_style('ch-style',			get_template_directory_uri() . '/inc/js/ch/ch.css');
 	wp_enqueue_style('sl-style',			get_template_directory_uri() . '/inc/js/sl/jquery.formstyler.css');
 	wp_enqueue_style('dialog', 				get_template_directory_uri() . '/inc/js/dialogBox/jquery-impromptu.css');
 	wp_enqueue_style( 'wp-color-picker' );
-}
+}}
 
-function fruitful_add_jquery_script() {
+
+if( !function_exists('fruitful_add_jquery_script') ) {
+function fruitful_add_jquery_script () {
 	wp_enqueue_script('wp-color-picker');
 	
 	if( function_exists( 'wp_enqueue_media' ) ){
@@ -429,9 +391,11 @@ function fruitful_add_jquery_script() {
 	wp_enqueue_script('dialog', 			get_template_directory_uri() . "/inc/js/dialogBox/jquery-impromptu.min.js",  array('jquery'));
 	wp_enqueue_script('uploads_',			get_template_directory_uri() . "/inc/js/uploads_.js", array('jquery'));
 	wp_enqueue_script('admin-jQuery-fruit',	get_template_directory_uri() . "/inc/js/main.js", array('jquery'));
-}
+}}
 
-function fruitful_get_box_upload_image($val, $field, $btnclassup = 'upload_btn', $btnclassr = 'reset_btn', $imgcontclass = '', $imgid = '') {
+
+if( !function_exists('fruitful_get_box_upload_image') ) {
+function fruitful_get_box_upload_image ($val, $field, $btnclassup = 'upload_btn', $btnclassr = 'reset_btn', $imgcontclass = '', $imgid = '') {
 		 $out  = '';
 		 $out .= '<div class="box-image">';
 			if ($val != '') {
@@ -457,10 +421,12 @@ function fruitful_get_box_upload_image($val, $field, $btnclassup = 'upload_btn',
 			$out .= '</div>';
 		$out .= '</div>';
 	return $out;
-}
+}}
 
 
-function fruitful_get_box_upload_slide($attach_id, $link_url, $is_blank, $ind, $btnclassup = 'upload_btn',  $btnclassr = 'reset_btn') {
+
+if( !function_exists('fruitful_get_box_upload_slide') ) {
+function fruitful_get_box_upload_slide ($attach_id, $link_url, $is_blank, $ind, $btnclassup = 'upload_btn',  $btnclassr = 'reset_btn') {
 	$out  = ''; 
 	$out .= '<div class="box-image">';
 	if ($attach_id != -1) {
@@ -485,10 +451,12 @@ function fruitful_get_box_upload_slide($attach_id, $link_url, $is_blank, $ind, $
 		$out .= '</div>';
 	$out .= '</div>';
 	return $out;
-}
+}}
 
 
-function fruitful_get_select_fields($field_name, $options, $array_of_values, $class_name = "selected") {
+
+if( !function_exists('fruitful_get_select_fields') ) {
+function fruitful_get_select_fields ($field_name, $options, $array_of_values, $class_name = "selected") {
 		$out = '';
 		$out .= '<select class="'. $class_name .'" name="fruitful_theme_options['.$field_name.']" id="options-'.$field_name.'">';
 		$selected = $options[$field_name];
@@ -503,14 +471,18 @@ function fruitful_get_select_fields($field_name, $options, $array_of_values, $cl
 			$out .= $p . $r;
 	$out .= '</select>';
 	echo $out;
-}
+}}
 	
-function fruitful_ret_options ($name_options) {
+
+if( !function_exists('fruitful_ret_options') ) {
+function fruitful_ret_options  ($name_options) {
    return $options = array_filter((array) get_option($name_options));
-}
+}}
 
 
-function fruitful_get_default_array() {
+
+if( !function_exists('fruitful_get_default_array') ) {
+function fruitful_get_default_array () {
 return array(
 				/*General Settings*/
 				'responsive'		=> 'on',
@@ -518,13 +490,13 @@ return array(
 				'pagecomment'		=> 'on',
 				'is_fixed_header'	=> 'off',
 				'styletheme'		=> 'off',
+				'showcart'  		=> 'on',
 				'is_wpml_ready'		=> 'on',
 
 				/*Header image*/
 				'header_bg_color'	=> '#ffffff',	
-				'header_img' 		=> '',
-				'header_img_size'	=> 'full',
-				'header_height' 	=> '84',
+				'header_img' 	=> '',
+				'header_height' => '84',
 				
 				/*Background Image*/
 				'backgroung_img'    => '',
@@ -538,7 +510,6 @@ return array(
 				
 				'logo_position'		=> '0',
 				'menu_position'		=> '2',
-				
 				
 				/*Color*/
 				'menu_bg_color'		=> '#ffffff',
@@ -641,14 +612,7 @@ return array(
 				'yelp_url'			=> '',
 				'email_link'		=> '', 
 
-				/*woocoommerce*/
-				'showcart'  		=> 'on',
-				'woo_shop_sidebar'	=> '2',
-				'shop_num_row'		=> '4',
-				'woo_shop_num_prod' => '10',
-				
-				
 				'custom_css'        => stripslashes('')
 		);
-}
+}}
 ?>
